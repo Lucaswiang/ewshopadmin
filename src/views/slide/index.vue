@@ -14,8 +14,7 @@
             <span>轮播图列表</span>
             <span class="ml-auto"><NButton type="info" @click="showModal = true" >+ 新建</NButton></span>
           </div>
-          <div>
-
+          <div class="px-6">
             <n-data-table
                 :columns="columns"
                 :data="data"
@@ -34,9 +33,9 @@
 
 <script lang="ts" setup>
 import { h,ref,onMounted } from 'vue'
-import { NButton, useMessage,NAvatar,NSwitch,useLoadingBar } from 'naive-ui'
+import { NButton, useMessage,NImage,NSwitch,useLoadingBar } from 'naive-ui'
 import AddSlide from './components/AddSlide.vue'
-import { users } from '@/api/users'
+import { slides } from '@/api/slide'
 const page = ref(1)
 const message = useMessage()
 const data = ref([])
@@ -46,7 +45,7 @@ const columns = [
     title: '轮播图片',
     key: 'img_url',
     render (row) {
-      return h(NAvatar,{round:true,src:row.avatar_url,size:'medium'})
+      return h(NImage,{round:false,src:row.img_url,class:'h-12'})
     }
   },
   {
@@ -62,7 +61,7 @@ const columns = [
     key: 'status',
     render(row){
       return h(NSwitch,{
-        size:'medium',
+        size:'small',
         color:'#1890ff',
         activeColor:'#52c41a',
         inactiveColor:'#d9d9d9',
@@ -96,10 +95,7 @@ const columns = [
     }}
 ]
 const pagination = ref(false as const)
-const formSearch = ref({
-  title:'',
-  url:''
-})
+
 // 添加模态框显示状态
 const showModal = ref(false)
 // 编辑模态框
@@ -113,36 +109,21 @@ const checkEditModal = (show:boolean) => {
 const loadingBar = useLoadingBar()
 
 onMounted(()=>{
-  getUserList({})
+  getSlidesList({})
 })
 const updatePage = (pageNum) => {
-  getUserList({
-    current:pageNum,
-    name:formSearch.value.name,
-    email:formSearch.value.email
+  getSlidesList({
+    current:pageNum
   })
 }
-const searchSubmit = (e) =>{
-  e.preventDefault()
-  getUserList({
-    name:formSearch.value.name,
-    email:formSearch.value.email,
-    current:1
-  })
-}
-const searchReload = ()=>{
-  getUserList({})
-  formSearch.value = {
-    name:'',
-    email:''
-  }
-}
-const getUserList = (params) =>{
+
+
+const getSlidesList = (params) =>{
   loadingBar.start()
-  users(params).then(users =>{
-    data.value = users.data
-    totalPages.value = users.meta.pagination.total_pages
-    page.value = users.meta.pagination.current_page
+  slides(params).then(slides =>{
+    data.value = slides.data
+    totalPages.value = slides.meta.pagination.total_pages
+    page.value = slides.meta.pagination.current_page
     loadingBar.finish()
   }).catch(err=>{
     loadingBar.error()
@@ -152,10 +133,8 @@ const checkShowModal = (status)=>{
   showModal.value = status
 }
 const reload = ()=>{
-  getUserList({
-    current:page.value,
-    name:formSearch.value.name,
-    email:formSearch.value.email
+  getSlidesList({
+    current:page.value
   })
 }
 </script>

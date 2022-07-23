@@ -4,7 +4,7 @@ import {login,user} from '@/api/auth';
 export interface IUserState {
     token: string;
     username: string;
-    avatar: string;
+    avatar_url: string;
     permissions: string[];
     info: Object;
 }
@@ -14,7 +14,7 @@ export const useUserStore = defineStore({
     state: ():IUserState => ({
         token: localStorage.getItem('token') || '',
         username:'',
-        avatar:'',
+        avatar_url:'',
         permissions:[],
         info:{},
     }),
@@ -23,7 +23,7 @@ export const useUserStore = defineStore({
             return this.token;
         },
         getAvatar(): string {
-            return this.avatar;
+            return this.avatar_url;
         },
         getUserName(): string {
             return this.username;
@@ -44,8 +44,8 @@ export const useUserStore = defineStore({
             localStorage.setItem('token',token);
             this.token = token;
         },
-        setAvatar(avatar: string) {
-            this.avatar = avatar;
+        setAvatar(avatar_url: string) {
+            this.avatar_url = avatar_url;
         },
         setUserInfo(info:Object) {
             this.info = info;
@@ -68,12 +68,11 @@ export const useUserStore = defineStore({
             }
         },
         async getUser(){
-            console.log('getUser');
+            // console.log('getUser');
             try {
                 const response = await user();
                 this.setUserInfo(response);
-                console.log(response.avatar);
-                this.setAvatar(response.avatar);
+                this.setAvatar(response.avatar_url);
                 this.setUserName(response.name);
                 return response;
             } catch (error) {

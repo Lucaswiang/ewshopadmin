@@ -26,6 +26,13 @@
               placeholder="请输入跳转URL"
           />
         </n-form-item>
+        <n-form-item path="seq" label="排序"  >
+          <n-input
+              v-model:value="model.seq"
+              type="number"
+              placeholder="请输入排序"
+          />
+        </n-form-item>
         <n-form-item label="是否启用" path="status">
           <n-radio-group v-model:value="model.status" name="status">
             <n-space>
@@ -76,6 +83,7 @@ const model = ref({
   title: null,
   img: null,
   url: null,
+  seq: null,
   status: null
 })
 const rules = {
@@ -94,7 +102,13 @@ const rules = {
   url: [
     {
       required: true,
-      message: '输入输入跳转链接'
+      message: '请输入跳转链接'
+    }
+  ],
+  seq: [
+    {
+      required: true,
+      message: '请输入排序'
     }
   ],
   status: [

@@ -2,7 +2,7 @@
   <div class="content px-5">
     <div class="mt-5 flex content-between justify-between">
       <n-card title="用户数">
-        <span class="text-lg font-semibold text-green-700">696</span>
+        <span class="text-lg font-semibold text-green-700">742</span>
       </n-card>
       <n-card title="商品数">
         <span class="text-lg font-semibold text-red-700">294</span>
