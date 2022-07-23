@@ -9,31 +9,6 @@
         </div>
      </div>
     <div class="content px-4">
-        <div class="bg-white pt-4 pr-6">
-          <n-form
-              ref="formRef"
-              inline
-              :label-width="80"
-              :model="formSearch"
-              label-placement="left"
-          >
-            <n-form-item label="姓名" path="name">
-              <n-input v-model:value="formSearch.name" placeholder="输入姓名" />
-            </n-form-item>
-            <n-form-item label="邮箱" path="email">
-              <n-input v-model:value="formSearch.email" placeholder="请输入邮箱" />
-            </n-form-item>
-
-            <n-form-item class="ml-auto">
-              <n-button class="mr-4" attr-type="button" @click="searchReload">
-                重置
-              </n-button>
-              <n-button type="info" attr-type="button" @click="searchSubmit">
-                搜索
-              </n-button>
-            </n-form-item>
-          </n-form>
-        </div>
         <div class="mt-4 bg-white">
           <div class="text-xl px-6 py-4 flex ">
             <span>轮播图列表</span>
@@ -68,23 +43,23 @@ const data = ref([])
 const totalPages = ref(0)
 const columns = [
   {
-    title: '头像',
-    key: 'avatar_url',
+    title: '轮播图片',
+    key: 'img_url',
     render (row) {
       return h(NAvatar,{round:true,src:row.avatar_url,size:'medium'})
     }
   },
   {
-    title: '姓名',
-    key: 'name'
+    title: '标题',
+    key: 'title'
   },
   {
-    title: '邮箱',
-    key: 'email'
+    title: '跳转链接',
+    key: 'url'
   },
   {
     title: '是否禁用',
-    key: 'is_locked',
+    key: 'status',
     render(row){
       return h(NSwitch,{
         size:'medium',
@@ -93,9 +68,13 @@ const columns = [
         inactiveColor:'#d9d9d9',
         activeValue:1,
         inactiveValue:0,
-        value:row.is_locked == 1 ? false : true,
+        value:row.status == 1 ? false : true,
       })
     }
+  },
+  {
+    title: '排序',
+    key: 'seq',
   },
   {
     title: '创建时间',
@@ -118,8 +97,8 @@ const columns = [
 ]
 const pagination = ref(false as const)
 const formSearch = ref({
-  name:'',
-  email:''
+  title:'',
+  url:''
 })
 // 添加模态框显示状态
 const showModal = ref(false)

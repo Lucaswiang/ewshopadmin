@@ -9,7 +9,7 @@
         </div>
      </div>
     <div class="content px-4">
-        <div class="bg-white pt-4 pr-6">
+        <div class="bg-white pt-6 pr-6">
           <n-form
               ref="formRef"
               inline
