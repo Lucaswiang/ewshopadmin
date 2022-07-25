@@ -27,3 +27,21 @@ export function addSlides(data: any) {
         }
     );
 }
+
+export  function getSlideInfo(slideid) {
+    return request(
+        {
+            url: `/api/admin/slides/${slideid}`,
+            method: 'GET',
+        }
+    );
+}
+export  function updateSlide(slideid, data) {
+    return request(
+        {
+            url: `/api/admin/slides/${slideid}`,
+            method: 'PUT',
+            data
+        }
+    );
+}

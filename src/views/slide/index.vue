@@ -27,6 +27,7 @@
           </div>
         </div>
         <AddSlide :showModal="showModal" @checkShowModal="checkShowModal" @reloadTable="reload"></AddSlide>
+        <EditSlide v-if="showEditModal"  :slide_id="slide_id" :showModal="showEditModal" @checkShowModal="checkEditModal" @reloadTable="reload"></EditSlide>
     </div>
   </div>
 </template>
@@ -35,6 +36,7 @@
 import { h,ref,onMounted } from 'vue'
 import { NButton, useMessage,NImage,NSwitch,useLoadingBar } from 'naive-ui'
 import AddSlide from './components/AddSlide.vue'
+import EditSlide from './components/EditSlide.vue'
 import { slides } from '@/api/slide'
 const page = ref(1)
 const message = useMessage()
@@ -88,7 +90,7 @@ const columns = [
         color:'#1890ff',
         strong:true,
         onClick:()=>{
-           user_id.value = row.id
+          slide_id.value = row.id
             showEditModal.value = true
         }
       },'编辑')
@@ -101,7 +103,7 @@ const showModal = ref(false)
 // 编辑模态框
 const showEditModal = ref(false)
 
-const user_id = ref('')
+const slide_id = ref('')
 
 const checkEditModal = (show:boolean) => {
   showEditModal.value = show

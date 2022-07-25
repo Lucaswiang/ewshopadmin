@@ -6,7 +6,7 @@
   >
     <n-card
         style="width: 600px"
-        title="添加轮播图"
+        title="编辑轮播图"
         :bordered="false"
         size="huge"
         role="dialog"
@@ -15,7 +15,7 @@
       <template #header-extra>
         <span @click="$emit('checkShowModal',false)">X</span>
       </template>
-      <n-form  ref="formRef" :model="model" :rules="rules">
+      <n-form v-if="showForm" ref="formRef" :model="model" :rules="rules">
         <n-form-item path="title" label="标题">
           <n-input v-model:value="model.title" placeholder="请输入标题" />
         </n-form-item>
@@ -56,7 +56,7 @@
                   type="primary"
                   @click="slideSubmit"
               >
-                添加
+                提交
               </n-button>
             </div>
           </n-col>
@@ -67,17 +67,22 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import {addSlides} from "@/api/slide";
+import { ref,defineProps,defineEmits,onMounted } from 'vue'
+import {addSlides,getSlideInfo,updateSlide} from "@/api/slide";
 import Upload from '@/components/Upload/index.vue';
+
+import {getUserInfo} from "@/api/users";
 
 const props =  defineProps({
   showModal: {
     type: Boolean,
     default: false
+  },
+  slide_id:{
+    type: Number,
+    default: ''
   }
 })
-const emit = defineEmits(['checkShowModal','shuaxin'])
 
 const model = ref({
   title: null,
@@ -85,6 +90,19 @@ const model = ref({
   url: null,
   seq: null,
   status: null
+})
+const showForm = ref(false)
+const emit = defineEmits(['checkShowModal','shuaxin'])
+onMounted(()=>{
+  console.log(123123)
+  if(props.slide_id){
+    getSlideInfo(props.slide_id).then(res=>{
+      model.value.title = res.title
+      model.value.rul = res.rul
+      model.value.img = res.img
+      showForm.value = true
+    })
+  }
 })
 const rules = {
   title: [
@@ -126,13 +144,12 @@ const slideSubmit = (e)=>{
       console.log(errors)
     }else{
       // 请求API 添加数据
-      addSlides(model.value).then(res=>{
+      updateSlide(props.slide_id,model.value).then(res=>{
           console.log(res)
-          window.$message.success('添加成功')
+          window.$message.success('修改成功')
           emit('checkShowModal',false)
           emit('reloadTable')
       })
-     console.log(model.value)
     }
   })
 }
