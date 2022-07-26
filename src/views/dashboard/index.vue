@@ -15,9 +15,12 @@
 </template>
 
 <script>
-export default {
-  name: "index"
-}
+import { index } from '@/api/index'
+
+const indexStore = index()
+console.log(indexStore)
+
+
 </script>
 
 <style scoped lang="less">
