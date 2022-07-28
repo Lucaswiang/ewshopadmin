@@ -8,19 +8,36 @@
         <span class="text-lg font-semibold text-red-700">294</span>
       </n-card>
       <n-card title="订单数">
-        <span class="text-lg font-semibold text-blue-900">316</span>
+        <span class="text-lg font-semibold text-blue-900" d>316</span>
       </n-card>
     </div>
   </div>
 </template>
 
-<script>
+<script lang="ts" setup>
+import { ref,onMounted } from 'vue'
+import { useLoadingBar } from 'naive-ui'
 import { index } from '@/api/index'
 
 const indexStore = index()
 console.log(indexStore)
 
+const loadingBar = useLoadingBar()
 
+onMounted(()=>{
+  getIndex({})
+})
+
+const getIndex = (params) =>{
+  loadingBar.start()
+  index(params).then(index =>{
+    index.value = index.data
+    console.log(index);
+    loadingBar.finish()
+  }).catch(err=>{
+    loadingBar.error()
+  })
+}
 </script>
 
 <style scoped lang="less">
