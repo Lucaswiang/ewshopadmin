@@ -21,7 +21,7 @@ import { index } from '@/api/index'
 
 const indexStore = index()
 console.log(indexStore)
-
+const usersCount = ref([])
 const loadingBar = useLoadingBar()
 
 onMounted(()=>{

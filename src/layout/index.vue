@@ -7,7 +7,7 @@
         <n-layout-header>
           <PageHeader></PageHeader>
         </n-layout-header>
-        <n-layout-content content-style="padding: 0px;background-color:#f0f2f5">
+        <n-layout-content content-style="padding: 0px;background-color:#f0f2f5;height: 87vh;">
           <div class="content">
             <router-view></router-view>
           </div>
