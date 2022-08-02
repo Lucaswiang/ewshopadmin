@@ -2,9 +2,9 @@
   <div>
      <div class="h-24 w-full bg-white p-3 mb-6">
         <div>
-            <span class="text-slate-400 pr-1">首页</span> / <span class="pl-1">用户列表</span>
+            <span class="text-slate-400 pr-1">首页</span> / <span class="pl-1">商品管理</span>
             <div class="pt-3 text-xl text-black font-medium">
-              用户管理
+              商品管理
             </div>
         </div>
      </div>
@@ -36,7 +36,7 @@
         </div>
         <div class="mt-4 bg-white">
           <div class="text-xl px-6 py-4 flex ">
-            <span>用户列表</span>
+            <span>商品列表</span>
             <span class="ml-auto"><NButton type="info" @click="showModal = true" >+ 新建</NButton></span>
           </div>
           <div>
@@ -53,7 +53,7 @@
           </div>
         </div>
         <AddUser :showModal="showModal" @checkShowModal="checkShowModal" @reloadTable="reload"></AddUser>
-        <EditUser v-if="showEditModal"  :user_id="user_id" :showModal="showEditModal" @checkShowModal="checkEditModal" @reloadTable="reload"></EditUser>
+        <EditUser v-if="showEditModal"  :goods_id="goods_id" :showModal="showEditModal" @checkShowModal="checkEditModal" @reloadTable="reload"></EditUser>
     </div>
   </div>
 </template>
@@ -63,30 +63,53 @@ import { h,ref,onMounted } from 'vue'
 import { NButton, useMessage,NAvatar,NSwitch,useLoadingBar } from 'naive-ui'
 import AddUser from './components/AddUser.vue'
 import EditUser from './components/EditUser.vue'
-import { users } from '@/api/users'
+import { goods } from '@/api/goods'
 const page = ref(1)
 const message = useMessage()
 const data = ref([])
 const totalPages = ref(0)
 const columns = [
   {
-    title: '头像',
-    key: 'avatar_url',
+    title: '封面图',
+    key: 'cover_url',
     render (row) {
-      return h(NAvatar,{round:true,src:row.avatar_url,size:'medium'})
+      return h(NAvatar,{round:true,src:row.cover_url,size:'medium'})
     }
   },
   {
-    title: '姓名',
-    key: 'name'
+    title: '商品名称',
+    key: 'title'
   },
   {
-    title: '邮箱',
-    key: 'email'
+    title: '价格',
+    key: 'price'
   },
   {
-    title: '是否禁用',
-    key: 'is_locked',
+    title: '库存',
+    key: 'stock'
+  },
+  {
+    title: '销售',
+    key: 'sales'
+  },
+  {
+    title: '是否上架',
+    key: 'is_on',
+    render(row){
+      return h(NSwitch,{
+        size:'medium',
+        color:'#1890ff',
+        activeColor:'#52c41a',
+        inactiveColor:'#d9d9d9',
+        activeValue:1,
+        inactiveValue:0,
+        value:row.is_locked == 1 ? false : true,
+      })
+    }
+  },
+  {
+    title: '是否推荐',
+    key: 'is_recommend',
     render(row){
       return h(NSwitch,{
         size:'medium',
@@ -112,7 +135,7 @@ const columns = [
         color:'#1890ff',
         strong:true,
         onClick:()=>{
-           user_id.value = row.id
+          goods_id.value = row.id
             showEditModal.value = true
         }
       },'编辑')
@@ -120,15 +143,14 @@ const columns = [
 ]
 const pagination = ref(false as const)
 const formSearch = ref({
-  name:'',
-  email:''
+  title:''
 })
 // 添加模态框显示状态
 const showModal = ref(false)
 // 编辑模态框
 const showEditModal = ref(false)
 
-const user_id = ref('')
+const goods_id = ref('')
 
 const checkEditModal = (show:boolean) => {
   showEditModal.value = show
@@ -141,31 +163,28 @@ onMounted(()=>{
 const updatePage = (pageNum) => {
   getUserList({
     current:pageNum,
-    name:formSearch.value.name,
-    email:formSearch.value.email
+    title:formSearch.value.title
   })
 }
 const searchSubmit = (e) =>{
   e.preventDefault()
   getUserList({
-    name:formSearch.value.name,
-    email:formSearch.value.email,
+    title:formSearch.value.title,
     current:1
   })
 }
 const searchReload = ()=>{
   getUserList({})
   formSearch.value = {
-    name:'',
-    email:''
+    title:''
   }
 }
 const getUserList = (params) =>{
   loadingBar.start()
-  users(params).then(users =>{
-    data.value = users.data
-    totalPages.value = users.meta.pagination.total_pages
-    page.value = users.meta.pagination.current_page
+  goods(params).then(goods =>{
+    data.value = goods.data
+    totalPages.value = goods.meta.pagination.total_pages
+    page.value = goods.meta.pagination.current_page
     loadingBar.finish()
   }).catch(err=>{
     loadingBar.error()
@@ -177,8 +196,7 @@ const checkShowModal = (status)=>{
 const reload = ()=>{
   getUserList({
     current:page.value,
-    name:formSearch.value.name,
-    email:formSearch.value.email
+    title:formSearch.value.title
   })
 }
 </script>
