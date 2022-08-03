@@ -17,12 +17,10 @@
               :model="formSearch"
               label-placement="left"
           >
-            <n-form-item label="姓名" path="name">
-              <n-input v-model:value="formSearch.name" placeholder="输入姓名" />
+            <n-form-item label="商品名称" path="name">
+              <n-input v-model:value="formSearch.title" placeholder="输入商品名称" />
             </n-form-item>
-            <n-form-item label="邮箱" path="email">
-              <n-input v-model:value="formSearch.email" placeholder="请输入邮箱" />
-            </n-form-item>
+
 
             <n-form-item class="ml-auto">
               <n-button class="mr-4" attr-type="button" @click="searchReload">
@@ -39,7 +37,7 @@
             <span>商品列表</span>
             <span class="ml-auto"><NButton type="info" @click="showModal = true" >+ 新建</NButton></span>
           </div>
-          <div>
+          <div class="px-4">
 
             <n-data-table
                 :columns="columns"
@@ -60,7 +58,7 @@
 
 <script lang="ts" setup>
 import { h,ref,onMounted } from 'vue'
-import { NButton, useMessage,NAvatar,NSwitch,useLoadingBar } from 'naive-ui'
+import { NButton, useMessage,NImage,NSwitch,useLoadingBar } from 'naive-ui'
 import AddUser from './components/AddUser.vue'
 import EditUser from './components/EditUser.vue'
 import { goods } from '@/api/goods'
@@ -73,7 +71,7 @@ const columns = [
     title: '封面图',
     key: 'cover_url',
     render (row) {
-      return h(NAvatar,{round:true,src:row.cover_url,size:'medium'})
+      return h(NImage,{round:false,src:row.cover_url,class:'h-12'})
     }
   },
   {

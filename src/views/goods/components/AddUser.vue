@@ -15,8 +15,40 @@
       <template #header-extra>
         <span @click="$emit('checkShowModal',false)">X</span>
       </template>
-      <n-form  ref="formRef" :model="model" :rules="rules">
-            <Editor @backContent="backContent"></Editor>
+      <n-form  ref="formRef" :model="model" :rules="rules" label-placement="left" label-width="auto"
+               require-mark-placement="right-hanging">
+        <n-form-item :span="12" label="分类" path="category_id">
+          <n-select
+              v-model:value="model.category_id"
+              placeholder="请选择分类"
+              :options="generalOptions"
+          />
+        </n-form-item>
+        <n-form-item label="商品名称" path="title">
+          <n-input v-model:value="model.title" placeholder="请输入商品名称" />
+        </n-form-item>
+        <n-form-item :span="12" label="描述" path="description">
+          <n-input
+              v-model:value="model.description"
+              placeholder="请输入描述"
+              type="textarea"
+              :autosize="{
+            minRows: 2,
+            maxRows: 5
+          }"
+          />
+        </n-form-item>
+        <n-form-item path="price" label="价格"  >
+          <n-input v-model:value="model.price" type="number" placeholder="请输入价格" />
+        </n-form-item>
+        <n-form-item path="stock" label="库存"  >
+          <n-input v-model:value="model.stock" type="number" placeholder="请输入库存" />
+        </n-form-item>
+        <n-form-item label="图片上传" path="img">
+          <Upload @backKey="backKey"></Upload>
+        </n-form-item>
+
+        <Editor @backContent="backContent"></Editor>
         <n-row :gutter="[0, 24]" >
           <n-col :span="24">
             <div style="display: flex; justify-content: flex-end;margin-top:10px">
@@ -48,7 +80,8 @@ const emit = defineEmits(['checkShowModal','shuaxin'])
 
 
 const model = ref({
-  details: null
+  details: null,
+  title: null,
 })
 
 const rules = {
@@ -57,7 +90,13 @@ const rules = {
       required: true,
       message: '请输入详情'
     }
-  ]
+  ],
+  title: [
+    {
+      required: true,
+      message: '请输入商品名称'
+    }
+  ],
 }
 const formRef = ref()
 const userSubmit = (e)=>{

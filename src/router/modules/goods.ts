@@ -1,6 +1,6 @@
 import { RouteRecordRaw} from 'vue-router'
 import Layout from '@/layout/index.vue'
-import {Body} from '@vicons/ionicons5'
+import {Storefront} from '@vicons/ionicons5'
 import {renderIcon} from '@/utils'
 const routeName = 'goods'
 /**
@@ -21,7 +21,7 @@ const routes: Array<RouteRecordRaw> = [
         redirect: '/goods/list',
         meta: {
             title: '商品管理',
-            icon: renderIcon(Body),
+            icon: renderIcon(Storefront),
             sort:4,
             permissions:['goods']
         },
@@ -31,7 +31,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: `${routeName}_list`,
                 meta: {
                     title: '商品列表',
-                    icon: renderIcon(Body),
+                    icon: renderIcon(Storefront),
                 },
                 component: () => import('@/views/goods/index.vue'),
             }]

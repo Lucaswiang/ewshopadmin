@@ -1,6 +1,6 @@
 import { RouteRecordRaw} from 'vue-router'
 import Layout from '@/layout/index.vue'
-import {Body} from '@vicons/ionicons5'
+import {ImageSharp} from '@vicons/ionicons5'
 import {renderIcon} from '@/utils'
 const routeName = 'slide'
 /**
@@ -21,7 +21,7 @@ const routes: Array<RouteRecordRaw> = [
         redirect: '/slide/list',
         meta: {
             title: '轮播图管理',
-            icon: renderIcon(Body),
+            icon: renderIcon(ImageSharp),
             sort:6
         },
         children: [
@@ -30,7 +30,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: `${routeName}_list`,
                 meta: {
                     title: '轮播图列表',
-                    icon: renderIcon(Body),
+                    icon: renderIcon(ImageSharp),
                 },
                 component: () => import('@/views/slide/index.vue'),
             }
