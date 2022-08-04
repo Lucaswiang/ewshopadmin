@@ -68,7 +68,7 @@
 
 <script setup>
 import { ref,defineProps,defineEmits,onMounted } from 'vue'
-import {addSlides,getSlideInfo,updateSlide} from "@/api/slide";
+import {addSlides,getSlideInfo,updateSlide,seqSlide} from "@/api/slide";
 import Upload from '@/components/Upload/index.vue';
 
 import {getUserInfo} from "@/api/users";
@@ -98,7 +98,7 @@ onMounted(()=>{
   if(props.slide_id){
     getSlideInfo(props.slide_id).then(res=>{
       model.value.title = res.title
-      model.value.rul = res.rul
+      model.value.url = res.url
       model.value.img = res.img
       showForm.value = true
     })

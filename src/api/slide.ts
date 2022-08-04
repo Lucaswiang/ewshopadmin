@@ -45,3 +45,12 @@ export  function updateSlide(slideid, data) {
         }
     );
 }
+
+export function seqSlide() {
+    return request(
+        {
+            url: `/api/admin/slides/{slide}/seq`,
+            method: 'PATCH'
+        }
+    )
+}

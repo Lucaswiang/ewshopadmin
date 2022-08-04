@@ -44,7 +44,7 @@
         <n-form-item path="stock" label="库存"  >
           <n-input v-model:value="model.stock" type="number" placeholder="请输入库存" />
         </n-form-item>
-        <n-form-item label="图片上传" path="img">
+        <n-form-item label="图片上传" path="cover">
           <Upload @backKey="backKey"></Upload>
         </n-form-item>
 
@@ -80,15 +80,21 @@ const emit = defineEmits(['checkShowModal','shuaxin'])
 
 
 const model = ref({
-  details: null,
+  category_id:null,
   title: null,
+  description: null,
+  price: null,
+  stock: null,
+  cover: null,
+  details: null,
+
 })
 
 const rules = {
-  details: [
+  category_id: [
     {
       required: true,
-      message: '请输入详情'
+      message: '请输入商品名称'
     }
   ],
   title: [
@@ -97,6 +103,38 @@ const rules = {
       message: '请输入商品名称'
     }
   ],
+  description: [
+    {
+      required: true,
+      message: '请输入商品名称'
+    }
+  ],
+  price: [
+    {
+      required: true,
+      message: '请输入商品名称'
+    }
+  ],
+  stock: [
+    {
+      required: true,
+      message: '请输入商品名称'
+    }
+  ],
+  cover: [
+    {
+      required: true,
+      message: '请输入商品名称'
+    }
+  ],
+
+  details: [
+    {
+      required: true,
+      message: '请输入详情'
+    }
+  ],
+
 }
 const formRef = ref()
 const userSubmit = (e)=>{
@@ -106,6 +144,10 @@ const backContent = (htmlstring)=>{
   model.value.details = htmlstring
 }
 
+const backKey = (key)=>{
+  model.value.cover = key
+  console.log(key);
+}
 </script>
 
 <style scoped>
