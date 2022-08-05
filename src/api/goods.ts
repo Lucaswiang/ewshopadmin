@@ -25,10 +25,10 @@ export  function addGoods(data) {
     );
 }
 
-export  function getGoodsInfo(userid) {
+export  function getGoodsInfo(goodsid) {
     return request(
         {
-            url: `/api/admin/goods/${userid}`,
+            url: `/api/admin/goods/${goodsid}`,
             method: 'GET',
         }
     );

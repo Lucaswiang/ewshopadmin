@@ -6,7 +6,7 @@
   >
     <n-card
         style="width: 600px"
-        title="添加商品"
+        title="编辑商品"
         :bordered="false"
         size="huge"
         role="dialog"
@@ -15,8 +15,7 @@
       <template #header-extra>
         <span @click="$emit('checkShowModal',false)">X</span>
       </template>
-      <n-form  ref="formRef" :model="model" :rules="rules" label-placement="left" label-width="auto"
-               require-mark-placement="right-hanging">
+      <n-form v-if="showForm" ref="formRef" :model="model" :rules="rules">
         <n-form-item :span="12" label="分类" path="category_id">
           <n-select
               v-model:value="model.category_id"
@@ -24,18 +23,18 @@
               :options="generalOptions"
           />
         </n-form-item>
-        <n-form-item label="商品名称" path="title">
+        <n-form-item path="title" label="商品名称">
           <n-input v-model:value="model.title" placeholder="请输入商品名称" />
         </n-form-item>
-        <n-form-item :span="12" label="描述" path="description">
+        <n-form-item path="description" label="描述"  >
           <n-input
               v-model:value="model.description"
-              placeholder="请输入描述"
               type="textarea"
+              placeholder="请输入描述"
               :autosize="{
-            minRows: 2,
-            maxRows: 5
-          }"
+                minRows: 2,
+                maxRows: 5
+              }"
           />
         </n-form-item>
         <n-form-item path="price" label="价格"  >
@@ -44,20 +43,19 @@
         <n-form-item path="stock" label="库存"  >
           <n-input v-model:value="model.stock" type="number" placeholder="请输入库存" />
         </n-form-item>
-        <n-form-item label="图片上传" path="cover">
+        <n-form-item label="图片上传" path="img">
           <Upload @backKey="backKey"></Upload>
         </n-form-item>
-
         <Editor @backContent="backContent"></Editor>
-        <n-row :gutter="[0, 24]" >
+        <n-row :gutter="[0, 24]">
           <n-col :span="24">
-            <div style="display: flex; justify-content: flex-end;margin-top:10px">
+            <div style="display: flex; justify-content: flex-end">
               <n-button
                   round
                   type="primary"
-                  @click="userSubmit"
+                  @click="goodsSubmit"
               >
-                添加
+                提交
               </n-button>
             </div>
           </n-col>
@@ -68,33 +66,54 @@
 </template>
 
 <script setup>
-import { h, ref,defineProps,defineEmits } from 'vue'
-import Editor from '@/components/Editor/index.vue'
+import { ref,defineProps,defineEmits,onMounted } from 'vue'
+import {addGoods,getGoodsInfo,updateGoods} from "@/api/goods";
+import Upload from '@/components/Upload/index.vue';
+
+import {getUserInfo} from "@/api/users";
+
 const props =  defineProps({
   showModal: {
     type: Boolean,
     default: false
+  },
+  goods_id:{
+    type: Number,
+    default: ''
   }
 })
-const emit = defineEmits(['checkShowModal','shuaxin'])
-
 
 const model = ref({
-  category_id:null,
+  category_id: null,
   title: null,
   description: null,
   price: null,
   stock: null,
   cover: null,
-  details: null,
-
+  details: null
 })
-
+const showForm = ref(false)
+const emit = defineEmits(['checkShowModal','shuaxin'])
+onMounted(()=>{
+  console.log(123123)
+  if(props.goods_id){
+    getGoodsInfo(props.goods_id).then(res=>{
+      model.value.category_id = res.category_id
+      model.value.title = res.title
+      model.value.description = res.description
+      model.value.price = res.price
+      model.value.stock = res.stock
+      model.value.cover = res.cover
+      model.value.details = res.details
+      showForm.value = true
+    })
+  }
+})
 const rules = {
   category_id: [
     {
       required: true,
-      message: '请输入商品名称'
+      message: '请选择分类'
     }
   ],
   title: [
@@ -106,28 +125,33 @@ const rules = {
   description: [
     {
       required: true,
-      message: '请输入商品名称'
+      message: '请输入描述'
     }
   ],
   price: [
     {
       required: true,
-      message: '请输入商品名称'
+      message: '请输入价格'
     }
   ],
   stock: [
     {
       required: true,
-      message: '请输入商品名称'
+      message: '请输入库存'
     }
   ],
   cover: [
     {
       required: true,
-      message: '请输入商品名称'
+      message: '请上传图片'
     }
   ],
-
+  url: [
+    {
+      required: true,
+      message: '请输入跳转链接'
+    }
+  ],
   details: [
     {
       required: true,
@@ -137,19 +161,28 @@ const rules = {
 
 }
 const formRef = ref()
-const userSubmit = (e)=>{
-  console.log(model.value)
+const goodsSubmit = (e)=>{
+  e.preventDefault()
+  formRef.value.validate(errors=>{
+    if(errors){
+      console.log(errors)
+    }else{
+      // 请求API 添加数据
+      updateGoods(props.goods_id,model.value).then(res=>{
+        console.log(res)
+        window.$message.success('修改成功')
+        emit('checkShowModal',false)
+        emit('reloadTable')
+      })
+    }
+  })
 }
-const backContent = (htmlstring)=>{
-  model.value.details = htmlstring
-}
-
 const backKey = (key)=>{
-  model.value.cover = key
-  console.log(key);
+  model.value.img = key
 }
 </script>
 
 <style scoped>
 
 </style>
+

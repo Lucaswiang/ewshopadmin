@@ -59,8 +59,8 @@
 <script lang="ts" setup>
 import { h,ref,onMounted } from 'vue'
 import { NButton, useMessage,NImage,NSwitch,useLoadingBar } from 'naive-ui'
-import AddUser from './components/AddUser.vue'
-import EditUser from './components/EditUser.vue'
+import AddUser from './components/AddGoods.vue'
+import EditUser from './components/EditGoods.vue'
 import { goods } from '@/api/goods'
 const page = ref(1)
 const message = useMessage()
