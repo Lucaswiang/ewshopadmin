@@ -2,48 +2,48 @@ import request from "@/utils/request";
 
 
 /**
- * @description: 商品列表
+ * @description: 分类列表
  * @param params
  */
-export function goods(params: any) {
+export function category(params: any) {
     return request(
         {
-            url: '/api/admin/goods',
+            url: '/api/admin/category',
             method: 'GET',
             params,
         }
     );
 }
 /**
- * 添加商品
+ * 添加分类
  */
-export  function addGoods(data) {
+export  function addCategory(data) {
     return request(
         {
-            url: '/api/admin/goods',
+            url: '/api/admin/category',
             method: 'POST',
             data,
         }
     );
 }
 /**
- * 商品详情
+ * 分类详情
  */
-export  function getGoodsInfo(goodsid) {
+export  function getCategoryInfo(categoryid) {
     return request(
         {
-            url: `/api/admin/goods/${goodsid}`,
+            url: `/api/admin/users/${categoryid}`,
             method: 'GET',
         }
     );
 }
 /**
- * 修改商品
+ * 更新分类
  */
-export  function updateGoods(good, data) {
+export  function updateCategory(categoryid, data) {
     return request(
         {
-            url: `/api/admin/goods/${good}`,
+            url: `/api/admin/category/${categoryid}`,
             method: 'PUT',
             data
         }

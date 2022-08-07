@@ -62,16 +62,15 @@
           </n-col>
         </n-row>
       </n-form>
+      <n-skeleton v-else text :repeat="5" />
     </n-card>
   </n-modal>
 </template>
 
 <script setup>
 import { ref,defineProps,defineEmits,onMounted } from 'vue'
-import {addSlides,getSlideInfo,updateSlide,seqSlide} from "@/api/slide";
+import { getSlideInfo,updateSlide } from "@/api/slide";
 import Upload from '@/components/Upload/index.vue';
-
-import {getUserInfo} from "@/api/users";
 
 const props =  defineProps({
   showModal: {
@@ -100,6 +99,8 @@ onMounted(()=>{
       model.value.title = res.title
       model.value.url = res.url
       model.value.img = res.img
+      model.value.seq = res.seq
+      model.value.status = res.status
       showForm.value = true
     })
   }

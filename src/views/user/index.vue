@@ -63,7 +63,7 @@ import { h,ref,onMounted } from 'vue'
 import { NButton, useMessage,NAvatar,NSwitch,useLoadingBar } from 'naive-ui'
 import AddUser from './components/AddUser.vue'
 import EditUser from './components/EditUser.vue'
-import { users } from '@/api/users'
+import { users,lockUser } from '@/api/users'
 const page = ref(1)
 const message = useMessage()
 const data = ref([])

@@ -39,6 +39,12 @@ request.interceptors.response.use((response) => {
                 window.location.href = '/login'
             }, 500)
             break;
+        case 400:
+            console.log(response.data.message)
+            let msg2 = response.data.message
+            window.$message.error(msg2)
+            // window.$message.error('系统数据禁止编辑, 请自行创建数据')
+            break;
         case 404:
             window.$message.error('接口不存在')
             break;

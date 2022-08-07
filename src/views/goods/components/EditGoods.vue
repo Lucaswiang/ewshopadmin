@@ -61,16 +61,15 @@
           </n-col>
         </n-row>
       </n-form>
+      <n-skeleton v-else text :repeat="7" />
     </n-card>
   </n-modal>
 </template>
 
 <script setup>
 import { ref,defineProps,defineEmits,onMounted } from 'vue'
-import {addGoods,getGoodsInfo,updateGoods} from "@/api/goods";
+import { getGoodsInfo,updateGoods } from "@/api/goods";
 import Upload from '@/components/Upload/index.vue';
-
-import {getUserInfo} from "@/api/users";
 
 const props =  defineProps({
   showModal: {

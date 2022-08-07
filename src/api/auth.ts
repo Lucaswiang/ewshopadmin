@@ -1,5 +1,8 @@
 import request from '@/utils/request';
 
+/**
+ * 用户登录
+ */
 export function login(data:Object) {
     return request(
         {
@@ -9,7 +12,9 @@ export function login(data:Object) {
         }
     );
 }
-
+/**
+ * 用户信息
+ */
 export function user(){
     return request(
         {
@@ -18,7 +23,9 @@ export function user(){
         }
     );
 }
-
+/**
+ * 用户退出
+ */
 export function logout() {
     return request(
         {

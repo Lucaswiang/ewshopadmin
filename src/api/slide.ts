@@ -2,7 +2,7 @@ import request from "@/utils/request";
 
 
 /**
- * @description: 轮播图
+ * @description: 轮播图列表
  * @param params
  */
 export function slides(params: any) {
@@ -15,8 +15,7 @@ export function slides(params: any) {
     );
 }
 /**
- * @description: 轮播图
- * @param params
+ * 添加轮播图
  */
 export function addSlides(data: any) {
     return request(
@@ -27,7 +26,9 @@ export function addSlides(data: any) {
         }
     );
 }
-
+/**
+ * 轮播图详情
+ */
 export  function getSlideInfo(slideid) {
     return request(
         {
@@ -36,6 +37,9 @@ export  function getSlideInfo(slideid) {
         }
     );
 }
+/**
+ * 修改轮播图
+ */
 export  function updateSlide(slideid, data) {
     return request(
         {
@@ -45,11 +49,13 @@ export  function updateSlide(slideid, data) {
         }
     );
 }
-
-export function seqSlide() {
+/**
+ * 轮播图排序
+ */
+export function seqSlide(slideid) {
     return request(
         {
-            url: `/api/admin/slides/{slide}/seq`,
+            url: `/api/admin/slides/${slideid}/seq`,
             method: 'PATCH'
         }
     )

@@ -14,7 +14,9 @@ export function users(params: any) {
         }
     );
 }
-
+/**
+ * 新增用户
+ */
 export  function addUser(data) {
     return request(
         {
@@ -24,7 +26,9 @@ export  function addUser(data) {
         }
     );
 }
-
+/**
+ * 用户详情
+ */
 export  function getUserInfo(userid) {
     return request(
         {
@@ -33,12 +37,26 @@ export  function getUserInfo(userid) {
         }
     );
 }
+/**
+ * 更新用户信息
+ */
 export  function updateUser(userid, data) {
     return request(
         {
             url: `/api/admin/users/${userid}`,
             method: 'PUT',
             data
+        }
+    );
+}
+/**
+ * 禁用和启动
+ */
+export  function lockUser(userid) {
+    return request(
+        {
+            url: `/api/admin/users/${userid}/lock`,
+            method: 'PATCH',
         }
     );
 }
