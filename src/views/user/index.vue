@@ -46,6 +46,7 @@
                 :data="data"
                 :pagination="pagination"
                 :bordered="false"
+                row-class-name="rowclass"
             />
             <div class="p-4 flex justify-end pr-10">
               <n-pagination v-model:page="page" @update:page="updatePage" :page-count="totalPages" />
@@ -183,6 +184,11 @@ const reload = ()=>{
 }
 </script>
 
-<style scoped>
-
+<style lang="less">
+  .rowclass{
+    height: 65px;
+    .n-data-table-td{
+      font-size: 14px;
+    }
+  }
 </style>

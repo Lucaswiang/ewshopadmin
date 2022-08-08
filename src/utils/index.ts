@@ -12,8 +12,12 @@ export const renderIcon =  (icon:Component) : Component =>{
 export function generatorMenu(routerMap: Array<any>) {
     // routerMap 按照 sort 排序
     routerMap.sort((a, b) => a.meta.sort - b.meta.sort);
+    // let permissions = ['users','goods','dashboard'];
     let result = routerMap.map((item) => {
         // 判断 item.name 是否在 permissions 中 如果不存在跳过
+        // if (!permissions.includes(item.name)) {
+        //     return null;
+        // }
         let menu = {
             label: item?.meta?.title,
             key: item?.name,
@@ -27,6 +31,7 @@ export function generatorMenu(routerMap: Array<any>) {
         return menu
     })
     // 去除result null
+    // return result.filter(item => item !== null)
     return result
 }
 /**

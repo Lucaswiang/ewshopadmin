@@ -33,7 +33,7 @@ const menuOptions = generatorMenu(routeModuleList)
 const handleUpdateValue=(key,item) =>{
   console.log(key,item)
   defaultKey.value = key
-    router.push({name:key})
+  router.push({name:key})
 }
 </script>
 
