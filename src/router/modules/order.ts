@@ -20,7 +20,7 @@ const routes: Array<RouteRecordRaw> = [
         component: Layout,
         redirect: '/order/list',
         meta: {
-            title: '财务管理',
+            title: '订单管理',
             icon: renderIcon(JournalOutline),
             sort:2
         },
@@ -33,14 +33,14 @@ const routes: Array<RouteRecordRaw> = [
                 },
                 component: () => import('@/views/order/index.vue'),
             },
-            {
-                path: 'refund',
-                name: `${routeName}_refund`,
-                meta: {
-                    title: '退款列表'
-                },
-                component: () => import('@/views/order/refund.vue'),
-            }
+            // {
+            //     path: 'refund',
+            //     name: `${routeName}_refund`,
+            //     meta: {
+            //         title: '退款列表'
+            //     },
+            //     component: () => import('@/views/order/refund.vue'),
+            // }
         ]
     }
 ];

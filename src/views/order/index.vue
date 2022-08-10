@@ -53,7 +53,7 @@
           </div>
         </div>
       </div>
-
+      <Details v-if="showEditModal"  :order_id="order_id" :showModal="showEditModal" @checkShowModal="checkEditModal" @reloadTable="reload"></Details>
     </div>
   </div>
 </template>
@@ -61,7 +61,7 @@
 <script lang="ts" setup>
 import { h,ref,onMounted } from 'vue'
 import { NButton, useMessage,NAvatar,NSwitch,useLoadingBar } from 'naive-ui'
-
+import Details from './components/Details.vue'
 import { orders } from '@/api/order'
 const page = ref(1)
 const message = useMessage()
@@ -116,7 +116,7 @@ const columns = [
         color:'#1890ff',
         strong:true,
         onClick:()=>{
-          user_id.value = row.id
+          order_id.value = row.id
           showEditModal.value = true
         }
       },'详情')
@@ -129,15 +129,21 @@ const formSearch = ref({
 
 })
 
-const user_id = ref('')
+const showEditModal = ref(false)
+
+const order_id = ref('')
+
+const checkEditModal = (show:boolean) => {
+  showEditModal.value = show
+}
 
 const loadingBar = useLoadingBar()
 
 onMounted(()=>{
-  getUserList({})
+  getOrderList({})
 })
 const updatePage = (pageNum) => {
-  getUserList({
+  getOrderList({
     current:pageNum,
     order_no:formSearch.value.order_no,
     trade_no:formSearch.value.trade_no
@@ -145,20 +151,20 @@ const updatePage = (pageNum) => {
 }
 const searchSubmit = (e) =>{
   e.preventDefault()
-  getUserList({
+  getOrderList({
     order_no:formSearch.value.order_no,
     trade_no:formSearch.value.trade_no,
     current:1
   })
 }
 const searchReload = ()=>{
-  getUserList({})
+  getOrderList({})
   formSearch.value = {
     order_no:'',
     trade_no:''
   }
 }
-const getUserList = (params) =>{
+const getOrderList = (params) =>{
   loadingBar.start()
   orders(params).then(orders =>{
     data.value = orders.data
@@ -171,7 +177,7 @@ const getUserList = (params) =>{
 }
 
 const reload = ()=>{
-  getUserList({
+  getOrderList({
     current:page.value,
     order_no:formSearch.value.order_no,
     trade_no:formSearch.value.trade_no
