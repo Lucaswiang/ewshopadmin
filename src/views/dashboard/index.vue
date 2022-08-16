@@ -1,12 +1,12 @@
 <template>
   <div class="content px-5">
     <div class="mt-5 flex content-between justify-between">
-      <n-card>
+      <n-card style="margin-right: 20px;">
           <n-statistic label="用户数" >
             <span class="text-green-700">742</span>
           </n-statistic>
       </n-card>
-      <n-card>
+      <n-card style="margin-right: 20px;">
         <n-statistic label="商品数" >
           <span class="text-red-700">294</span>
         </n-statistic>
@@ -38,8 +38,9 @@ onMounted(()=>{
 const getIndex = (params) =>{
   loadingBar.start()
   index(params).then(index =>{
-    index.value = index.data
+    goodsCount = index.goods_count;
     console.log(index);
+
     loadingBar.finish()
   }).catch(err=>{
     loadingBar.error()
@@ -49,7 +50,7 @@ const getIndex = (params) =>{
 
 <style scoped lang="less">
 .n-card {
-  max-width: 310px;
+  //max-width: 310px;
 
 }
 </style>

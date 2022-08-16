@@ -48,6 +48,10 @@
         <n-form-item label="图片上传" path="img">
            <Upload @backKey="backKey"></Upload>
         </n-form-item>
+        <n-image
+            width="100"
+            :src="img_url"
+        />
         <n-row :gutter="[0, 24]">
           <n-col :span="24">
             <div style="display: flex; justify-content: flex-end">
@@ -156,6 +160,7 @@ const slideSubmit = (e)=>{
 }
 const backKey = (key)=>{
    model.value.img = key
+  console.log(key);
 }
 </script>
 
