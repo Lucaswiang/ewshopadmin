@@ -44,14 +44,14 @@ const data = ref([])
 const totalPages = ref(0)
 const columns = [
   {
-    title: '轮播图片',
+    title: '分类图片',
     key: 'img_url',
     render (row) {
       return h(NImage,{round:false,src:row.img_url,class:'h-12'})
     }
   },
   {
-    title: '标题',
+    title: '分类名称',
     key: 'title'
   },
   {

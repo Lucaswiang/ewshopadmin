@@ -16,8 +16,8 @@
         <span @click="$emit('checkShowModal',false)">X</span>
       </template>
       <n-form  ref="formRef" :model="model" :rules="rules">
-        <n-form-item path="title" label="标题">
-          <n-input v-model:value="model.title" placeholder="请输入标题" />
+        <n-form-item path="title" label="分类名称">
+          <n-input v-model:value="model.title" placeholder="请输入分类名称" />
         </n-form-item>
         <n-form-item path="url" label="跳转URL"  >
           <n-input
@@ -90,7 +90,7 @@ const rules = {
   title: [
     {
       required: true,
-      message: '请输入标题'
+      message: '请输入分类名称'
     }
   ],
   img: [
