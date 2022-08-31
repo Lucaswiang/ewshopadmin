@@ -22,7 +22,7 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
             title: '评论管理',
             icon: renderIcon(Body),
-            sort:1,
+            sort:6,
             permissions:['comment','admin']
         },
         children: [

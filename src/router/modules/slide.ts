@@ -22,7 +22,7 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
             title: '轮播图管理',
             icon: renderIcon(ImageSharp),
-            sort:6
+            sort:7
         },
         children: [
             {
