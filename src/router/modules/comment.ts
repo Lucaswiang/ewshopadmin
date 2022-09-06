@@ -32,7 +32,7 @@ const routes: Array<RouteRecordRaw> = [
                     title: '评论列表',
                     icon: renderIcon(ImageSharp),
                 },
-                component: () => import('@/views/comment/index.vue'),
+                component: () => import('@/views/slide/index.vue'),
             }
         ]
     }
