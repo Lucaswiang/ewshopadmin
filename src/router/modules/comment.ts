@@ -1,6 +1,6 @@
 import { RouteRecordRaw} from 'vue-router'
 import Layout from '@/layout/index.vue'
-import {Body} from '@vicons/ionicons5'
+import {ImageSharp} from '@vicons/ionicons5'
 import {renderIcon} from '@/utils'
 const routeName = 'comment'
 /**
@@ -21,9 +21,8 @@ const routes: Array<RouteRecordRaw> = [
         redirect: '/comment/list',
         meta: {
             title: '评论管理',
-            icon: renderIcon(Body),
-            sort:6,
-            permissions:['comment','admin']
+            icon: renderIcon(ImageSharp),
+            sort:7
         },
         children: [
             {
@@ -31,7 +30,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: `${routeName}_list`,
                 meta: {
                     title: '评论列表',
-                    icon: renderIcon(Body),
+                    icon: renderIcon(ImageSharp),
                 },
                 component: () => import('@/views/comment/index.vue'),
             }
